@@ -1,14 +1,32 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Client from "../views/Client.vue";
+import Review from "../views/Review.vue";
+import Resolve from "../views/Resolve.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home
+  },
+  {
+    path: "/client/:clientId/:sourceId?",
+    name: "client",
+    component: Client
+  },
+  {
+    path: "/review",
+    name: "review",
+    component: Review
+  },
+  {
+    path: "/resolve/:clientId?",
+    name: "resolve",
+    component: Resolve
   },
   {
     path: "/about",

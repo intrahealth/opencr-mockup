@@ -1,32 +1,46 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar app color="primary" dark clipped-right>
+      <v-toolbar-title class="display-1">Open Client Registry</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn color="primary" to="/">
+          <v-icon>mdi-home</v-icon> Home
+        </v-btn>
+        <v-btn color="primary">
+          <v-icon>mdi-view-dashboard</v-icon> Dashboard
+        </v-btn>
+        <v-btn color="primary" to="/review">
+          <v-badge color="error" content="3" >
+          <v-icon>mdi-alert</v-icon> Action Required
+          </v-badge>
+        </v-btn>
+        <v-btn color="primary">
+          <v-icon>mdi-account-plus</v-icon> Add User
+        </v-btn>
+        <v-btn color="primary">
+          <v-icon>mdi-logout</v-icon> Logout
+        </v-btn>
+      </v-toolbar-items>
+    </v-app-bar>
+
+    <v-main>
+      <router-view />
+    </v-main>
+
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-#nav {
-  padding: 30px;
-}
+export default {
+  name: "App",
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  components: {
+  },
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  data: () => ({
+    //
+  })
+};
+</script>

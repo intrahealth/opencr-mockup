@@ -1,30 +1,27 @@
 <template>
     <v-card>
     <v-card-title>
-      Client Registry
+      Action Required
       <v-spacer />
-      <v-text-field
-        v-model="$store.state.search"
-        label="Search"
-        hide-details
-        single-line
-        clearable
-        @change="searchData()"
-      />
     </v-card-title>
     <v-data-table
       style="cursor: pointer"
-      :search="$store.state.search"
       :headers="headers"
-      :items="$store.state.patients"
+      :items="$store.state.reviews"
       :options.sync="options"
       :footer-props="{ 'items-per-page-options': [5,10,20,50] }"
       :loading="loading"
       class="elevation-1"
       @click:row="clickIt"
-    >
-      <template v-slot:item.birthdate="{ item }">
-        {{ item.birthdate | moment("MMMM DD, YYYY") }}
+      >
+      <template v-slot:item.uid="{ item }">
+        <router-link :to="'/resolve/'+item.source_id">{{ item.uid }}</router-link>
+      </template>
+      <template v-slot:item.reason="{ item }">
+        <span class="text-uppercase">{{ item.reason }}</span>
+      </template>
+      <template v-slot:item.date="{ item }">
+        {{ item.date | moment("MMMM DD YYYY HH:mm:ssZ") }}
       </template>
     </v-data-table>
   </v-card>
@@ -34,7 +31,7 @@
 // @ is an alias to /src
 
 export default {
-  name: "Home",
+  name: "Review",
   components: {
   },
   data() {
@@ -47,19 +44,19 @@ export default {
       options: { itemsPerPage: 10, sortBy: ["family"] },
       rowsPerPageItems: [5, 10, 20, 50],
       headers: [
+        { text: "CR ID", value: "uid" },
         { text: "Surname", value: "family" },
         { text: "Given Names", value: "given" },
         { text: "Source", value: "source" },
         { text: "Source ID", value: "source_id" },
-        { text: "Gender", value: "gender" },
-        { text: "Birth Date", value: "birthdate" },
-        { text: "CR ID", value: "uid", sortable: false }
+        { text: "Reason", value: "reason" },
+        { text: "Date Flagged", value: "date" }
       ],
     };
   },
   methods: {
     clickIt: function(client) {
-      this.$router.push({ name: "client", params: { clientId: client.uid } });
+      this.$router.push({ name: "review", params: { clientId: client.uid } });
       //alert(patient.nin)
     }
   }
