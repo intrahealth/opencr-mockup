@@ -11,7 +11,8 @@
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn v-if="uid === '6f2eac1b-5b1d-49ce-a4b7-f9089128f836'" color="warning" @click="$router.push('/resolve/590-57-2820')"><v-badge icon="mdi-alert" color="error" >Review Potential Matches</v-badge></v-btn>
-        <v-btn color="secondary" @click="$router.go(-1)">Back</v-btn>
+        <v-btn color="secondary" @click="$router.go(-1)" v-if="canGoBack">Back</v-btn>
+        <v-btn color="secondary" @click="close" v-else>Close</v-btn>
       </v-toolbar-items>
       <v-tab-item value="record">
         <v-row>
@@ -179,6 +180,11 @@ export default {
       }
     }
   },
+  computed: {
+    canGoBack: function() {
+      return history.length > 1
+    }
+  },
   mounted: function() {
     this.uid = this.$route.params.clientId
     this.patients = this.$store.state.patients.filter( patient => patient.uid === this.uid )
@@ -207,8 +213,9 @@ export default {
       }
       this.unbreaks = []
     },
-
-
+    close: function() {
+      window.close()
+    }
   }
 }
 </script>

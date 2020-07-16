@@ -105,7 +105,7 @@
               ></v-select>
             </template>
             <template v-slot:item.source_id="{ item }">
-              <router-link :to="'/client/'+item.uid+'/'+item.source_id">{{ item.source_id }}</router-link>
+              <a @click="goTo('client',{ clientId: item.uid, sourceId: item.source_id })">{{ item.source_id }}</a>
             </template>
             <template v-slot:item.view="{ item }">
               <v-switch v-model="showCard[item.source_id]" hide-details @change="if ( showCard[item.source_id] ) $vuetify.goTo($refs.fullCards)"></v-switch>
@@ -366,6 +366,10 @@ export default {
       this.organizeResolves()
       this.copyCohortInfo = null
       this.cohortPopup = false
+    },
+    goTo: function( name, params ) {
+      let routeData = this.$router.resolve( { name: name, params: params } )
+      window.open(routeData.href, '_blank')
     }
   }
 };
