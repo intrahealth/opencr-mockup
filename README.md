@@ -1,6 +1,8 @@
 # OpenCR Mockups
 These are UI mockups for OpenCR.
 
+View it at <https://intrahealth.github.io/opencr-mockup>
+
 ## Project setup
 ```
 npm install
