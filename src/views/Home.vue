@@ -9,7 +9,6 @@
         hide-details
         single-line
         clearable
-        @change="searchData()"
       />
     </v-card-title>
     <v-data-table

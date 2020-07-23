@@ -260,9 +260,11 @@ export default {
       copyCohortInfo: null,
       useNickname: true,
       includeCRID: false,
-      available_nicknames: [ "Aardvark", "Buffalo", "Cheetah", "Dik-dik", "Elephant", "Fennec Fox", "Giraffe", "Hippopotamus", 
-        "Impala", "Jaguar", "Klipspringer", "Lion", "Meerkat", "Nile Crocodile", "Ostrich", "Porcupine", "Quelea Quelea",
-        "Rhinoceros", "Spotted Hyena", "Topi", "Uromastyx", "Vanga", "Wildebeest", "Xerus", "Yellow Mongoose", "Zebra" ],
+      available_nicknames: [ 
+        "Arnor", "Beleriand", "Cirith Ungol", "Erebor", "Eriador", "Fangorn Forest", "Gladden Fields", "Gondor",
+        "Isengard", "Moria", "Lóthlorien", "Minas Tirith", "Mirkwood", "Misty Mountains", "Mordor",
+        "Mount Doom", "Númenor", "Rivendell", "Rohan", "The Shire"
+        ],
       nickname: {}
     };
   },
