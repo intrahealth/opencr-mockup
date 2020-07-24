@@ -261,9 +261,9 @@ export default {
       useNickname: true,
       includeCRID: false,
       available_nicknames: [ 
-        "Arnor", "Beleriand", "Cirith Ungol", "Erebor", "Eriador", "Fangorn Forest", "Gladden Fields", "Gondor",
-        "Isengard", "Moria", "Lóthlorien", "Minas Tirith", "Mirkwood", "Misty Mountains", "Mordor",
-        "Mount Doom", "Númenor", "Rivendell", "Rohan", "The Shire"
+        "Aluminum", "Beryllium", "Carbon", "Dysprosium", "Europium", "Flourine", "Gallium", "Hydrogen", "Iron", "Krypton",
+        "Lithium", "Magnesium", "Nitrogen", "Oxygen", "Phosphorus", "Rubidium", "Sodium", "Titanium", "Uranium",
+        "Vanadium", "Xenon", "Yttrium", "Zinc"
         ],
       nickname: {}
     };
