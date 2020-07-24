@@ -19,10 +19,10 @@
           <h3 class="white--text">Options</h3>
         </v-list-item>
         <v-list-item>
-          <v-switch v-model="useNickname" dark label="Use Nicknames?" @change="setupCRIDList"></v-switch>
+          <v-switch v-model="useNickname" dark label="Use Temporary CD ID?" @change="setupCRIDList"></v-switch>
         </v-list-item>
         <v-list-item>
-          <v-switch v-model="includeCRID" dark label="Include CR ID with Nickname?" @change="setupCRIDList"></v-switch>
+          <v-switch v-model="includeCRID" dark label="Include Actual CR ID with Temporary CR ID?" @change="setupCRIDList"></v-switch>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -56,15 +56,19 @@
     <v-dialog :value="cohortPopup" width="500">
       <v-card light>
         <v-card-title class="secondary lighten-1" color="white" primary-title>
-          Include Cohort? 
+          Move All?
         </v-card-title>
         <v-card-text>
-          Do you want to include all the other records from this CR ID and move them all to the new CR ID?
+          Do you want to include all the other records from this CR ID and move them all to the new CR ID”
         </v-card-text>
         <v-card-actions>
-          <v-btn color="warning" @click="copyCohort">Yes</v-btn>
+          <v-btn color="info" @click="copyClient">Move this one record</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="info" @click="copyCohortInfo = null; cohortPopup = false">No</v-btn>
+          <v-btn color="warning" @click="copyCohort">Move all records</v-btn>
+        </v-card-actions>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="error" @click="copyCohortInfo = null; cohortPopup = false">Cancel</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -234,15 +238,15 @@ export default {
       loading: false,
       newIdx: 1,
       headers: [
-        { text: this.cridHeader, value: "uid" },
+        { text: this.cridHeader, value: "uid", sortable: false },
         { text: "Source", value: "source" },
         { text: "Source ID", value: "source_id" },
         { text: "Surname", value: "family" },
         { text: "Given Names", value: "given" },
         { text: "Birth Date", value: "birthdate" },
         { text: "Gender", value: "gender" },
-        { text: "Full View", value: "view" },
-        { text: "Scores", value: "score" },
+        { text: "Full View", value: "view", sortable: false },
+        { text: "Scores", value: "score", sortable: false },
       ],
       dates: { birthdate: true },
       fields: { source: "Submitting System", source_id: "System ID", family: "Family Name", given: "Given Name",
@@ -291,7 +295,7 @@ export default {
   },
   computed: {
     cridHeader: function() {
-      return this.useNickname ? "Nickname" + ( this.includeCRID ? " / CR ID" : "") : "CR ID"
+      return this.useNickname ? "Temporary CR ID" + ( this.includeCRID ? " / Actual CR ID" : "") : "CR ID"
     }
   },
   methods: {
@@ -344,7 +348,8 @@ export default {
       return this.resolves.find( resolve => resolve.source_id === source_id ).source
     },
     moveClient: function(val,item) {
-      this.copyCohortInfo = { old_id: item.uid, new_id: val }
+      this.copyCohortInfo = { old_id: item.uid, new_id: val, item: item }
+      /*
       if ( val === ADD_TEXT ) {
         item.uid = NEW_PREFIX + this.newIdx
         this.nickname[ item.uid ] = this.available_nicknames.pop()
@@ -354,18 +359,36 @@ export default {
       }
       //item.uid = val
       this.organizeResolves()
+      */
       this.cohortPopup = true
     },
-    saveIt: function() {
-
+    copyClient: function() {
+      if ( this.copyCohortInfo ) {
+        let item = this.copyCohortInfo.item
+        if ( this.copyCohortInfo.new_id === ADD_TEXT ) {
+          item.uid = NEW_PREFIX + this.newIdx
+          this.nickname[ item.uid ] = this.available_nicknames.pop()
+          this.newIdx++
+        } else {
+          item.uid = this.copyCohortInfo.new_id
+        }
+        this.organizeResolves()
+      }
+      this.copyCohortInfo = null
+      this.cohortPopup = false
     },
     copyCohort: function() {
       if ( this.copyCohortInfo ) {
+        if ( this.copyCohortInfo.new_id === ADD_TEXT ) {
+          this.copyCohortInfo.new_id = NEW_PREFIX + this.newIdx
+          this.nickname[ this.copyCohortInfo.new_id ] = this.available_nicknames.pop()
+          this.newIdx++
+        }
         for ( let resolve of this.resolves.filter( resolve => resolve.uid === this.copyCohortInfo.old_id ) ) {
           resolve.uid = this.copyCohortInfo.new_id
         }
+        this.organizeResolves()
       }
-      this.organizeResolves()
       this.copyCohortInfo = null
       this.cohortPopup = false
     },
