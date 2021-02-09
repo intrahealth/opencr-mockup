@@ -15,7 +15,10 @@
           <v-icon>mdi-alert</v-icon> Action Required
           </v-badge>
         </v-btn>
-        <v-btn color="primary">
+        <v-btn color="primary" to="/csvreport">
+          <v-icon>mdi-file-chart</v-icon> CSV Reports
+        </v-btn>
+         <v-btn color="primary">
           <v-icon>mdi-account-plus</v-icon> Add User
         </v-btn>
         <v-btn color="primary">
